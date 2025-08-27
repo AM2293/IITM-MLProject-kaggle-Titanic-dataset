@@ -3,7 +3,7 @@ from Titanic_dataset_analysis.constants import *
 # CONFIG_FILE_PATH = Path("config/config.yaml")
 # PARAMS_FILE_PATH = Path("params.yaml")
 from Titanic_dataset_analysis.utils.common import read_yaml, create_directories
-from Titanic_dataset_analysis.entity.config_entity import DataIngestionConfig, DataPreprocessingConfig
+from Titanic_dataset_analysis.entity.config_entity import *
 
 class ConfigurationManager:
     def __init__(
@@ -44,3 +44,24 @@ class ConfigurationManager:
         )
 
         return data_preprocessing_config
+    
+    def model_training_config(self) -> ModelTrainingConfig:
+        config = self.config.model_training
+        self.params = self.params
+
+        create_directories([config.root_dir])
+        # print(f"Params received under: {self.params} and {self.params.splitratio}")
+        model_training_config = ModelTrainingConfig(
+            root_dir=config.root_dir,
+            input_data_file=config.input_data_file,
+            model_file=config.model_file,
+            params_splitratio=self.params.splitratio,
+            params_seed=self.params.seed,
+            params_regParam=self.params.regParam,
+            params_elasticNetParam=self.params.elasticNetParam,
+            params_number_of_folds=self.params.number_of_folds,
+            params_sparkSessionTitle=self.params.sparkSessionTitle
+            
+        )
+
+        return model_training_config

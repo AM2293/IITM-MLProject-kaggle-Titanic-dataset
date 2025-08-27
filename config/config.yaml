@@ -12,6 +12,11 @@ data_preprocessing:
   input_data_file: artifacts/data_ingestion/train.csv
   local_data_file: artifacts/data_preprocessing/titanic_preprocessed.csv
 
+model_training:
+  root_dir: artifacts/model_training
+  input_data_file: artifacts/data_preprocessing/titanic_preprocessed.csv
+  model_file: artifacts/model_training/model.pkl
+
 
 
 # prepare_base_model:

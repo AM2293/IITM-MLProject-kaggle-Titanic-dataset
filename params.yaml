@@ -1,1 +1,6 @@
-key: val
+splitratio: [0.8, 0.2]
+seed: 42
+regParam: [0.01, 0.1]
+elasticNetParam: [0.0, 0.1, 0.5, 1.0]
+number_of_folds: 5
+sparkSessionTitle: "Titanic_data"

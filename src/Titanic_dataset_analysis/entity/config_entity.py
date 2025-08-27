@@ -15,3 +15,16 @@ class DataPreprocessingConfig:
     root_dir: Path
     input_data_file: Path
     local_data_file: Path
+    
+
+@dataclass(frozen=True)
+class ModelTrainingConfig:
+    root_dir: Path
+    input_data_file: Path
+    model_file: Path
+    params_splitratio: list
+    params_seed: int
+    params_regParam: list
+    params_elasticNetParam: list
+    params_number_of_folds: int
+    params_sparkSessionTitle: str
