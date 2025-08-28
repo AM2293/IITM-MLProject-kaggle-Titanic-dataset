@@ -4,3 +4,6 @@ regParam: [0.01, 0.1]
 elasticNetParam: [0.0, 0.1, 0.5, 1.0]
 number_of_folds: 5
 sparkSessionTitle: "Titanic_data"
+experiment_name: "Titanic_Pipeline_Exp1"
+mlflow_uri: "http://localhost:5000"
+mlflow_run_name: "LR_Pipeline"

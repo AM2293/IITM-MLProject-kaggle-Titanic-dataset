@@ -15,7 +15,12 @@ data_preprocessing:
 model_training:
   root_dir: artifacts/model_training
   input_data_file: artifacts/data_preprocessing/titanic_preprocessed.csv
-  model_file: artifacts/model_training/model.pkl
+  test_data_file: artifacts/model_training/test_data
+
+mlflow_model_management:
+  root_dir: artifacts/mlflow_model_management
+  input_model_folder: artifacts/model_training/best_model
+  test_data_file: artifacts/model_training/test_data
 
 
 

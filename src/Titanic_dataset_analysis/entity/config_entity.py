@@ -21,10 +21,21 @@ class DataPreprocessingConfig:
 class ModelTrainingConfig:
     root_dir: Path
     input_data_file: Path
-    model_file: Path
+    test_data_file: Path
     params_splitratio: list
     params_seed: int
     params_regParam: list
     params_elasticNetParam: list
     params_number_of_folds: int
+    params_sparkSessionTitle: str
+
+
+@dataclass(frozen=True)
+class MLFlowModelManagementConfig:
+    root_dir: Path
+    input_model_folder: Path
+    test_data_file: Path
+    params_experiment_name: str
+    params_mlflow_uri: str
+    params_mlflow_run_name: str
     params_sparkSessionTitle: str

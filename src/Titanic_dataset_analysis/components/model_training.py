@@ -24,7 +24,7 @@ class ModelTraining:
         if not os.path.exists(self.config.input_data_file):
             logger.info(f"File download failed in previous step! Please check the location mentioned : {self.config.input_data_file}")
         else:
-            logger.info(f"File already exists of size: {get_size(Path(self.config.input_data_file))}")  
+            logger.info(f"File already exists of size: {get_size(Path(self.config.input_data_file))}")
 
         self.df = pd.read_csv(self.config.input_data_file)
         logger.info(f"Processed Input file read from {self.config.input_data_file}")
@@ -71,6 +71,8 @@ class ModelTraining:
         # Train/Test split
         # -------------------------------
         train_data, test_data = df.drop(*columns_to_drop).randomSplit(self.config.params_splitratio, seed=self.config.params_seed)
+        test_data.write.mode("overwrite").option("header", True).csv(self.config.test_data_file)
+        logger.info(f"Test Data is saved at: {self.config.test_data_file}")
 
         # -------------------------------
         # Param Grid & CrossValidator

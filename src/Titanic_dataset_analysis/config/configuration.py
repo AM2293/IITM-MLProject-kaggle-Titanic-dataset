@@ -50,11 +50,10 @@ class ConfigurationManager:
         self.params = self.params
 
         create_directories([config.root_dir])
-        # print(f"Params received under: {self.params} and {self.params.splitratio}")
         model_training_config = ModelTrainingConfig(
             root_dir=config.root_dir,
             input_data_file=config.input_data_file,
-            model_file=config.model_file,
+            test_data_file=config.test_data_file,
             params_splitratio=self.params.splitratio,
             params_seed=self.params.seed,
             params_regParam=self.params.regParam,
@@ -65,3 +64,21 @@ class ConfigurationManager:
         )
 
         return model_training_config
+    
+    def mlflow_model_management_config(self) -> MLFlowModelManagementConfig:
+        config = self.config.mlflow_model_management
+        self.params = self.params
+
+        create_directories([config.root_dir])
+        mlflow_model_management_config = MLFlowModelManagementConfig(
+            root_dir=config.root_dir,
+            input_model_folder= config.input_model_folder,
+            test_data_file= config.test_data_file,
+            params_experiment_name= self.params.experiment_name,
+            params_mlflow_uri= self.params.mlflow_uri,
+            params_mlflow_run_name= self.params.mlflow_run_name,
+            params_sparkSessionTitle= self.params.sparkSessionTitle
+            
+        )
+
+        return mlflow_model_management_config
