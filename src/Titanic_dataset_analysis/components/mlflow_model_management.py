@@ -1,4 +1,5 @@
 import os
+import json
 import mlflow
 from pyspark.sql import SparkSession
 from pathlib import Path
@@ -97,6 +98,17 @@ class MLFlowModelManagement:
 
             logger.info(f"Run ID from constants: {run.info.run_id}")
             logger.info(f"Experiment ID from constants: {run.info.experiment_id}")
+
+            metadata = {
+                "experiment_id": run.info.experiment_id,
+                "run_id": run.info.run_id,
+                "model_uri": f"runs:/{run.info.run_id}/{self.config.params_mlflow_run_name}",
+                "model_uri_prod": f"models:/{experiment_name}/Production"
+            }
+            with open("artifacts/mlflow_model_management/model_info.json", "w") as f:
+                json.dump(metadata, f, indent=2)
+
+            logger.info(f"Saved model metadata: {metadata}")
                 
         os.makedirs(self.config.root_dir, exist_ok=True)
         logger.info(f"MLFlow Model Tracking done successfully.")
@@ -107,7 +119,9 @@ class MLFlowModelManagement:
             client.transition_model_version_stage(
                 name=self.config.params_experiment_name,
                 version=latest_version,
-                stage="Staging"
+                stage="Production",
+                archive_existing_versions=True
+                # stage="Staging"
             )
-            logger.info(f"Model '{self.config.params_experiment_name}' version {latest_version} moved to Staging!")
+            logger.info(f"Model '{self.config.params_experiment_name}' version {latest_version} moved to Production!")
         spark.stop()

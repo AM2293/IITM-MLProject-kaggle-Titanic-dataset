@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Titanic Survival Prediction</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; background: #fafafa; }
+        textarea { width: 100%; min-height: 200px; font-family: monospace; padding: 10px; border-radius: 5px; border: 1px solid #ccc; }
+        pre {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 5px;
+            white-space: pre-wrap;       /* Wrap long lines */
+            word-wrap: break-word;       /* Break long words */
+            max-height: 400px;           /* Limit box height */
+            overflow-y: auto;            /* Add vertical scroll if needed */
+        }
+        button { padding: 10px 20px; margin-top: 10px; }
+        .container { max-width: 900px; margin: auto; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Titanic Survival Prediction</h1>
+    <form method="POST" action="/predict">
+        <label><b>Enter Passenger JSON:</b></label><br>
+        <textarea name="json_input" oninput="auto_grow(this)">{
+  "data": [{
+    "PassengerId": 892,
+    "Pclass": 3,
+    "Name": "Kelly, Mr. James",
+    "Sex": "male",
+    "Age": 34.5,
+    "SibSp": 0,
+    "Parch": 0,
+    "Ticket": "330911",
+    "Fare": 7.8292,
+    "Cabin": "",
+    "Embarked": "Q"
+  }]
+}</textarea><br>
+        <button type="submit">Predict</button>
+    </form>
+
+    {% if output %}
+    <h2>Prediction Result:</h2>
+    <pre>{{ output | tojson(indent=2) }}</pre>
+    {% endif %}
+</div>
+
+<script>
+function auto_grow(element) {
+  element.style.height = "5px";
+  element.style.height = (element.scrollHeight)+"px";
+}
+</script>
+</body>
+</html>

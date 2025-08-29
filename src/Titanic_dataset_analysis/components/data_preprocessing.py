@@ -5,6 +5,7 @@ from Titanic_dataset_analysis.utils.common import get_size
 from Titanic_dataset_analysis import constants as const
 from Titanic_dataset_analysis.entity.config_entity import DataPreprocessingConfig
 from pathlib import Path
+import yaml
 
 class DataPreprocessing:
     def __init__(self, config: DataPreprocessingConfig):
@@ -32,6 +33,27 @@ class DataPreprocessing:
         const.MEAN_AGE = mean_age
         mode_embarked = self.df['Embarked'].mode().iloc[0] if 'Embarked' in self.df.columns else 'S'
         const.MODE_EMBARKED = mode_embarked
+        
+        config_file = "artifacts/data_preprocessing/params.yaml"
+        os.makedirs(os.path.dirname(config_file), exist_ok=True)
+        
+        # If file doesn't exist, create it with an empty dict
+        if not os.path.exists(config_file):
+            with open(config_file, "w") as f:
+                yaml.dump({}, f)
+
+        # Now safe to load
+        with open(config_file, "r") as f:
+            params = yaml.safe_load(f) or {}
+        
+        params['MEAN_AGE'] = float(mean_age)
+        params['MODE_EMBARKED'] = str(mode_embarked)
+        # Save back to YAML
+        with open(config_file, "w") as f:
+            yaml.safe_dump(params, f, sort_keys=False)
+
+        print("Updated params.yaml with mean age and mode embarked.")
+        
         self.df['Age'] = pd.to_numeric(self.df['Age'], errors='coerce').fillna(mean_age)
         if 'Fare' in self.df.columns:
             self.df['Fare'] = pd.to_numeric(self.df['Fare'], errors='coerce').fillna(0.0)

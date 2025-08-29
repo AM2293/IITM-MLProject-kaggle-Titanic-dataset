@@ -50,3 +50,6 @@ stages:
       - mlflow_uri
       - mlflow_run_name
       - sparkSessionTitle
+    metrics:
+    - model_info.json:
+        cache: false

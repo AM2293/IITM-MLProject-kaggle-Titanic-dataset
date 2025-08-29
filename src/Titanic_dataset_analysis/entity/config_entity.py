@@ -35,6 +35,7 @@ class MLFlowModelManagementConfig:
     root_dir: Path
     input_model_folder: Path
     test_data_file: Path
+    model_params: Path
     params_experiment_name: str
     params_mlflow_uri: str
     params_mlflow_run_name: str

@@ -74,6 +74,7 @@ class ConfigurationManager:
             root_dir=config.root_dir,
             input_model_folder= config.input_model_folder,
             test_data_file= config.test_data_file,
+            model_params= config.model_params,
             params_experiment_name= self.params.experiment_name,
             params_mlflow_uri= self.params.mlflow_uri,
             params_mlflow_run_name= self.params.mlflow_run_name,
