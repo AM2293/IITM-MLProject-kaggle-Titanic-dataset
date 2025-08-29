@@ -32,23 +32,24 @@ pip install -r requirements.txt
 ```
 
 ### STEP 04- From same location in different terminal start MLFlow UI
+#### Applicable only for this step
 
 ```bash
 conda activate titanic_env
 mlflow ui
 ```
 
-### STEP 05- Run commands
+### STEP 05- Run python commands or DVC commands
 
 ```bash
 python main.py
 ```
 
-### DVC cmd
-
-1. dvc init
-2. dvc repro
-3. dvc dag
+```bash
+dvc init
+dvc repro
+dvc dag
+```
 
 ### STEP 06- RUN application
 
