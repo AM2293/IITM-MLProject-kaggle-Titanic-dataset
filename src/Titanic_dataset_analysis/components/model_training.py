@@ -31,8 +31,10 @@ class ModelTraining:
     
     def model_training_and_save_file(self):
         """
-        zip_file_path: str
-        Extracts the zip file into the data directory
+        self.df has the preprocessed data.
+        We create spark session form pipeline of indexers-> encoders-> Vector Assembler-> LogisticRegression
+        Check the best params for LR model and then save them.
+        root_dir: Path. Here we save the model that is being trained on the processed data.
         Function returns None
         """
         # print(self.config)

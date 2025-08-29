@@ -3,7 +3,6 @@ import os
 import json
 import mlflow
 from flask_cors import CORS, cross_origin
-# from Titanic_dataset_analysis.pipeline.predict import PredictionPipeline
 from Titanic_dataset_analysis import logger
 import mlflow.spark
 import pandas as pd
@@ -21,8 +20,6 @@ python_exec = sys.executable   # path to current python
 
 os.environ["PYSPARK_PYTHON"] = python_exec
 os.environ["PYSPARK_DRIVER_PYTHON"] = python_exec
-# os.environ["PYSPARK_PYTHON"] = "/home/amit/python/anaconda3/envs/titanic_end_sem/bin/python"
-# os.environ["PYSPARK_DRIVER_PYTHON"] = "/home/amit/python/anaconda3/envs/titanic_end_sem/bin/python"
 os.putenv('LANG', 'en_US.UTF-8')
 os.putenv('LC_ALL', 'en_US.UTF-8')
 spark = SparkSession.builder.appName("Flask_app").getOrCreate()
@@ -44,8 +41,6 @@ titanic_schema = StructType([
 mlflow_params = load_json(Path("artifacts/mlflow_model_management/model_info.json"))
 model_params = read_yaml(Path("artifacts/data_preprocessing/params.yaml"))
 mlflow.set_tracking_uri("http://localhost:5000")
-# model_uri = mlflow_params['model_uri'] # "runs:/405858276345491f840c9500eef73bcf/lr-pipeline"
-# model_uri = 'models:/Titanic_Pipeline_Exp1/Production'
 model_uri = mlflow_params['model_uri_prod']
 model = mlflow.spark.load_model(model_uri)
 app = Flask(__name__)
@@ -132,8 +127,6 @@ def predict():
             data = request.get_json(force=True)["data"]
             logger.info(f"Data: {data}")
             output = run_prediction(data)
-            # test = PredictionPipeline(data)
-            # output = test.predict()
             logger.info(f"Predictions: {output}")
             return jsonify(output)
 
@@ -142,8 +135,6 @@ def predict():
         data = json.loads(json_input)["data"]
         logger.info(f"Data: {data}")
         output = run_prediction(data)
-        # test = PredictionPipeline(data, spark, model_params, )
-        # output = test.predict()
         logger.info(f"Predictions: {output}")
         return render_template('index.html', output=output)
 

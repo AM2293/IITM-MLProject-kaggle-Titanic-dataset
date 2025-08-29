@@ -1,16 +1,66 @@
 # IITM-MLProject-kaggle-Titanic-dataset
 
-## Steps to run the project
-1. git clone <Repo link>  ## Can be HTTP/SSH
-2. install conda
-3. conda create --name <env name> python=3.8 -y
-4. conda activate <env name>
-5. change the directory to cd IITM-MLProject-kaggle-Titanic-dataset
-6. pip install -r requirements.txt
-7. from same location in different terminal, start MLFlow UI for experimant visualisation
-   mlflow ui
-8. python main.py / dvc repro  --> For Running the pipeline
-9. python app.py  --> For running the flask app to check for predictions.
+# How to run?
+### STEPS:
+
+Clone the repository
+
+```bash
+https://github.com/AM2293/IITM-MLProject-kaggle-Titanic-dataset.git
+```
+
+### STEP 01- Create a conda environment after opening the repository
+
+```bash
+conda create -n titanic_env python=3.8 -y
+```
+
+```bash
+conda activate titanic_env
+```
+
+### STEP 02- Change the directory
+
+```bash
+cd IITM-MLProject-kaggle-Titanic-dataset
+```
+
+### STEP 03- Install the requirements
+
+```bash
+pip install -r requirements.txt
+```
+
+### STEP 04- From same location in different terminal start MLFlow UI
+
+```bash
+conda activate titanic_env
+mlflow ui
+```
+
+### STEP 05- Run commands
+
+```bash
+python main.py
+```
+
+### DVC cmd
+
+1. dvc init
+2. dvc repro
+3. dvc dag
+
+### STEP 06- RUN application
+
+```bash
+python app.py
+```
+
+### STEP 07- Open below link in browser
+```bash
+http://127.0.0.1:5001/predict
+```
+
 
 ## Workflows to update the folder in modular format
 1. Update config.yaml

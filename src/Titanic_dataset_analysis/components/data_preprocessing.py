@@ -24,8 +24,9 @@ class DataPreprocessing:
     
     def preprocess_and_save_file(self):
         """
-        zip_file_path: str
-        Extracts the zip file into the data directory
+        self.df is the data
+        It is preprocessed for filling missing values and dropping columns which are not relavent.
+        local_data_file: str Here the processed file gets saved.
         Function returns None
         """
         # Basic cleaning / feature engineering

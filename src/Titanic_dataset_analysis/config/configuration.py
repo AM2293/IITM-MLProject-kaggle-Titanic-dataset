@@ -1,7 +1,4 @@
-# from Titanic_dataset_analysis import constants as c
 from Titanic_dataset_analysis.constants import *
-# CONFIG_FILE_PATH = Path("config/config.yaml")
-# PARAMS_FILE_PATH = Path("params.yaml")
 from Titanic_dataset_analysis.utils.common import read_yaml, create_directories
 from Titanic_dataset_analysis.entity.config_entity import *
 

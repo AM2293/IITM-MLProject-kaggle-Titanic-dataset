@@ -26,8 +26,10 @@ class MLFlowModelManagement:
     
     def mlflow_model_tracking(self):
         """
-        zip_file_path: str
-        Extracts the zip file into the data directory
+        self.model is having the current model.
+        create the spark session and read the preprocessed splitted test_data for parameter measurement.
+        Log all those parameters in the mlflow experiment tracking and model registry.
+        It saves the mlflow parameters at model_info.json.
         Function returns None
         """
         # -------------------------------
@@ -37,9 +39,6 @@ class MLFlowModelManagement:
         spark.sparkContext.setLogLevel("WARN")
         
         df = spark.read.csv(str(self.config.test_data_file), header=True, inferSchema=True)
-        # # Family size + IsAlone
-        # df = df.withColumn("FamilySize", col("SibSp") + col("Parch") + 1)
-        # df = df.withColumn("IsAlone", when(col("FamilySize") == 1, 1).otherwise(0))
         logger.info(f"Experiment Name: {self.config.params_experiment_name}")
         experiment_name = self.config.params_experiment_name
         logger.info(f"Setting Tracking URI to : {self.config.params_mlflow_uri}")
@@ -52,11 +51,8 @@ class MLFlowModelManagement:
         mlflow.set_experiment(experiment_name)
         logger.info(f"Experiment ID: {experiment_id}")
         with mlflow.start_run(run_name=self.config.params_mlflow_run_name) as run:
-            # cv_model = crossval.fit(train_data)
-    
-            # Best params from final stage (LogReg is last in pipeline)
             best_lr = self.model.stages[-1]
-            # print(best_lr)
+            
             logger.info(f"regparam: {best_lr.getOrDefault('regParam')}")
             logger.info(f"ElasticNetParam: {best_lr.getOrDefault('elasticNetParam')}")
             mlflow.log_param("regParam", best_lr.getOrDefault("regParam"))
@@ -86,13 +82,10 @@ class MLFlowModelManagement:
             logger.info(f"F1: {f1}")
             
             
-            # model_name = "spark-titanic-LR-pipeline"
             mlflow.spark.log_model(self.model,
                            artifact_path=self.config.params_mlflow_run_name,
                            registered_model_name=self.config.params_experiment_name)
 
-            # print(f"Run ID: {run.info.run_id}")
-            # print(f"Experiment ID: {run.info.experiment_id}")
             const.RUN_ID = run.info.run_id
             const.EXPERIMENT_ID = run.info.experiment_id
 
@@ -121,7 +114,6 @@ class MLFlowModelManagement:
                 version=latest_version,
                 stage="Production",
                 archive_existing_versions=True
-                # stage="Staging"
             )
             logger.info(f"Model '{self.config.params_experiment_name}' version {latest_version} moved to Production!")
         spark.stop()
